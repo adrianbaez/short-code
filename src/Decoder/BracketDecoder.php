@@ -78,7 +78,7 @@ class BracketDecoder extends RegEx
     public function getAttributes(string $string)
     {
         // https://regex101.com/r/D7cyrG/1
-        $re = '/(\S*)=(["\'])(.*)\2|(\S*)=((?:.(?!\S*=))++)/mU';
+        $re = '/(\S*)=(["\'])(.*)\2|(\S*)=((?:.(?!\S*=))++)/U';
         $out = [];
         if (preg_match_all($re, $string, $matches, PREG_SET_ORDER, 0)) {
             foreach ($matches as $match) {
