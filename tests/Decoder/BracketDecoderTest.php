@@ -117,6 +117,10 @@ EOF;
             'attr' => 'value',
             'spaced' => 'spaced attribute'
         ], $bracketDecoder->getAttributes(' attr=value spaced=spaced attribute'));
+        $this->assertEquals([
+            'attr-trailing' => 'value whit trailing spaces',
+            'spaced' => 'spaced attribute'
+        ], $bracketDecoder->getAttributes(' attr-trailing=value whit trailing spaces     spaced=spaced attribute'));
         // Con comillas dobles o simples, pero no mezcladas
         $this->assertEquals([
             'attr' => 'value',

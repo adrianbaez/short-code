@@ -83,10 +83,10 @@ class BracketDecoder extends RegEx
         if (preg_match_all($re, $string, $matches, PREG_SET_ORDER, 0)) {
             foreach ($matches as $match) {
                 if(isset($match[1]) && $match[1] !== ''){
-                    $out[$match[1]] = $match[3];
+                    $out[$match[1]] = rtrim($match[3]);
                 }
                 if(isset($match[4]) && $match[4] !== ''){
-                    $out[$match[4]] = $match[5];
+                    $out[$match[4]] = rtrim($match[5]);
                 }
             }
         }
