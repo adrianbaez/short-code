@@ -117,6 +117,34 @@ EOF;
             'attr' => 'value',
             'spaced' => 'spaced attribute'
         ], $bracketDecoder->getAttributes(' attr=value spaced=spaced attribute'));
+        // Con comillas dobles o simples, pero no mezcladas
+        $this->assertEquals([
+            'attr' => 'value',
+            'spaced' => 'spaced attribute',
+            'merged' => '\'bad idea"',
+        ], $bracketDecoder->getAttributes(' attr=\'value\' spaced="spaced attribute" merged=\'bad idea"'));
+        $multilineAttributes = <<<EOF
+            single='single-quotes' double="double quotes"
+            merged-single-first='bad idea" merged-double-first="another bad idea'
+            without-quotes=attribute without quotes
+            attribute=value attr2=val2
+            mix-double-open="'singles in'" mix-single-open='"doubles in"'
+            merged-single-first='bad idea" attr=value
+            without-quotes=attribute without quotes last
+            mix-double-open="'singles in last'" mix-single-open='"doubles in last"'
+EOF;
+        $this->assertEquals([
+            'single' => 'single-quotes',
+            'double' => 'double quotes',
+            'merged-single-first' => 'bad idea" merged-double-first="another bad idea',
+            'without-quotes' => 'attribute without quotes last',
+            'attribute' => 'value',
+            'attr2' => 'val2',
+            'mix-double-open' => "'singles in last'",
+            'mix-single-open' => '"doubles in last"',
+            'merged-single-first' => '\'bad idea"',
+            'attr' => 'value',
+        ], $bracketDecoder->getAttributes($multilineAttributes));
     }
 
     /**
